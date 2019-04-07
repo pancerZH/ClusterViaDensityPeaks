@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.spatial.distance import pdist, squareform
+from sklearn import metrics
 
 
 class DensityPeak:
@@ -86,6 +87,8 @@ class DensityPeak:
         self.labelAllPoint()
         if self.halo is True:
             self.calHalo()
+        ss = metrics.silhouette_score(self.points, self.labelList)
+        print('ss = {}'.format(ss))
         self.draw()
 
     
@@ -195,7 +198,7 @@ class DensityPeak:
 
 if __name__ == "__main__":
     test = np.loadtxt('./Aggregation.txt', delimiter=',')
-    DP = DensityPeak(test, 0.02, 7, 'gaussian', halo=True)
+    DP = DensityPeak(test, 0.02, 7, 'gaussian', halo=False)
     DP.findClusterNumber()
     # DP.findCutoffDistance()
     DP.beginCluster()
